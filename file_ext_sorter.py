@@ -4,7 +4,7 @@ import aiopath
 import aioshutil
 import logging
 
-
+# Парсимо вхідний командний рядок
 parser = argparse.ArgumentParser(description="Sorting files")
 parser.add_argument("--from", "-f", required=True, help="From dir")
 parser.add_argument("--to", "-t", help="To dir", default="Output_dir")
@@ -14,6 +14,7 @@ from_dir = aiopath.AsyncPath(args["from"])
 to_dir = aiopath.AsyncPath(args["to"])
 
 
+# Збираємо і віддаємо далі шляхи до всіх файлі з каталогу і підкаталогів
 async def read_folder(path: aiopath.AsyncPath):
     async for file in path.iterdir():
         if await file.is_dir():
@@ -22,6 +23,7 @@ async def read_folder(path: aiopath.AsyncPath):
             await copy_file(file)
 
 
+# Копіюємо файли згідно за їхнім розширенням до відповідних підкаталогів
 async def copy_file(file: aiopath.AsyncPath):
     folder = to_dir / file.suffix[1:]
     try:
