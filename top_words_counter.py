@@ -31,6 +31,7 @@ def shuffle_function(mapped_values):
     return shuffled.items()
 
 
+# І створимо асинхронну функцію для виконання Reduce
 async def reduce_function(key_values):
     key, values = key_values
     return key, sum(values)
